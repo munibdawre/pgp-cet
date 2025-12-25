@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | PGP-CET</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>User Dashboard</header>
+
+<div class="container">
+  <button onclick="location.href='test-start.html'">Start CET Mock Test</button>
+  <button onclick="location.href='flashcards.html'">Flashcards</button>
+  <button onclick="logout()">Logout</button>
+</div>
+
+<script type="module" src="js/auth-guard.js"></script>
+<script type="module">
+  import { auth } from "./js/firebase.js";
+  import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  window.logout = () => signOut(auth);
+</script>
+</body>
+</html>

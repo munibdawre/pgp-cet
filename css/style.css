@@ -1,0 +1,201 @@
+/* =========================
+   GLOBAL THEME
+========================= */
+:root {
+  --primary: #4CAF50;
+  --white: #ffffff;
+  --light-bg: #f4f6f5;
+  --grey: #cccccc;
+  --yellow: #ffeb3b;
+  --red: #e53935;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--light-bg);
+  color: #222;
+}
+
+/* =========================
+   HEADER
+========================= */
+header {
+  background: var(--primary);
+  color: var(--white);
+  padding: 14px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.container {
+  max-width: 450px;
+  margin: 30px auto;
+  background: var(--white);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   INPUTS & SELECT
+========================= */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border-radius: 6px;
+  border: none;
+  background: var(--primary);
+  color: var(--white);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.92;
+}
+
+/* =========================
+   TEST PAGE
+========================= */
+#question {
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+#options label {
+  display: block;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#options input {
+  margin-right: 8px;
+}
+
+/* =========================
+   STATUS PANEL (CET STYLE)
+========================= */
+#statusPanel {
+  margin-top: 10px;
+  text-align: center;
+}
+
+#statusPanel span {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  margin: 3px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  background: var(--grey);
+}
+
+/* Answered */
+.status-answered {
+  background: var(--primary) !important;
+  color: var(--white);
+}
+
+/* Marked for review */
+.status-marked {
+  background: var(--yellow) !important;
+}
+
+/* =========================
+   RESULT PAGE
+========================= */
+.correct {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.wrong {
+  color: var(--red);
+  font-weight: bold;
+}
+
+.result-card {
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  background: #fafafa;
+  border-left: 5px solid var(--primary);
+}
+
+/* =========================
+   FLASHCARDS
+========================= */
+.card {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 25px;
+  min-height: 160px;
+  margin: 20px 0;
+  text-align: center;
+  font-size: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+/* =========================
+   MOBILE OPTIMIZATION
+========================= */
+@media (max-width: 600px) {
+
+  header {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .container {
+    width: 95%;
+    margin: 15px auto;
+    padding: 15px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  #statusPanel span {
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    font-size: 12px;
+  }
+}

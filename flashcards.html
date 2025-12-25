@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flashcards</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>Flashcards</header>
+
+<div class="container">
+  <select id="subject" onchange="loadFlashcards()">
+    <option value="">Select Subject</option>
+    <option>Anatomy</option>
+    <option>Physiology</option>
+    <option>Biochemistry</option>
+    <option>Fundamentals of Exercise Therapy</option>
+    <option>Fundamentals of Electro Therapy</option>
+    <option>Pharmacology</option>
+    <option>Pathology & Microbiology</option>
+    <option>Psychology</option>
+    <option>Psychiatry</option>
+    <option>Electrical Agents</option>
+    <option>Kinesio Therapeutics</option>
+    <option>General Surgery & Orthopedics</option>
+    <option>Medicine</option>
+    <option>OBGY</option>
+    <option>Physical Diagnosis & Manipulative Skills</option>
+    <option>Physiotherapy in Musculoskeletal Condition</option>
+    <option>Physiotherapy in Neurosciences</option>
+    <option>Physiotherapy in General Medical & Gen. Surgical Condition</option>
+    <option>Physiotherapy in Community Health</option>
+  </select>
+
+  <div class="card" onclick="flipCard()">
+    <div id="cardText">Select a subject</div>
+  </div>
+
+  <button onclick="prev()">Previous</button>
+  <button onclick="next()">Next</button>
+</div>
+
+<script type="module" src="js/auth-guard.js"></script>
+<script type="module" src="js/flashcards.js"></script>
+</body>
+</html>
