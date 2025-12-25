@@ -1,20 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Result</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{font-family:Arial;background:#f4f6f5}
+    header{background:#4CAF50;color:#fff;padding:15px;text-align:center}
+    .box{max-width:520px;margin:20px auto;background:#fff;padding:15px;border-radius:10px}
+    .correct{color:#4CAF50;font-weight:bold}
+    .wrong{color:red;font-weight:bold}
+    .card{margin-bottom:12px;padding:10px;border-left:4px solid #4CAF50}
+  </style>
 </head>
 <body>
 
 <header>Test Result</header>
 
-<div class="container">
+<div class="box">
   <h2 id="score"></h2>
-  <div id="resultList"></div>
+  <div id="list"></div>
 </div>
 
-<script type="module" src="js/result.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, doc, getDoc } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const attemptId=sessionStorage.getItem("attemptId");
+const firebaseConfig = {
+  apiKey: "AIzaSyCz1RpCPMesqwVwD5ki916ZsHm9Doi7JtU",
+  authDomain: "pgp-cet-portal.firebaseapp.com",
+  projectId: "pgp-cet-portal",
+  storageBucket: "pgp-cet-portal.firebasestorage.app",
+  messagingSenderId: "369834140308",
+  appId: "1:369834140308:web:8d9cadb6e095f7575c8a81"
+};
+
+(async()=>{
+  const att=await getDoc(doc(db,"testAttempts",attemptId));
+  const data=att.data();
+  let score=0;
+
+  for(const qid in data.answers){
+    const qSnap=await getDoc(doc(db,"questions",qid));
+    const q=qSnap.data();
+    const userAns=data.answers[qid];
+    const ok=userAns===q.correct;
+    if(ok) score++;
+
+    list.innerHTML+=`
+      <div class="card">
+        <b>${q.question}</b><br>
+        Your answer: ${userAns} ${ok?"<span class='correct'>✔</span>":"<span class='wrong'>✘</span>"}<br>
+        ${!ok?`<span class="correct">Correct: ${q.correct}. ${q.options[q.correct]}</span>`:""}
+        ${q.explanation?`<br><i>${q.explanation}</i>`:""}
+      </div>`;
+  }
+
+  score.innerText=`Score: ${score} / 100`;
+})();
+</script>
+
 </body>
 </html>

@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Flashcards</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{font-family:Arial;background:#f4f6f5}
+    header{background:#4CAF50;color:#fff;padding:15px;text-align:center}
+    .box{max-width:420px;margin:20px auto;background:#fff;padding:20px;border-radius:10px;text-align:center}
+    .card{padding:20px;min-height:140px;border-radius:10px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.1);cursor:pointer}
+    button{margin:6px;padding:8px}
+  </style>
 </head>
 <body>
 
 <header>Flashcards</header>
 
-<div class="container">
-  <select id="subject" onchange="loadFlashcards()">
+<div class="box">
+  <select id="subject" onchange="loadCards()">
     <option value="">Select Subject</option>
     <option>Anatomy</option>
     <option>Physiology</option>
@@ -34,15 +40,54 @@
     <option>Physiotherapy in Community Health</option>
   </select>
 
-  <div class="card" onclick="flipCard()">
-    <div id="cardText">Select a subject</div>
-  </div>
+  <div class="card" id="card" onclick="flip()">Select a subject</div>
 
   <button onclick="prev()">Previous</button>
   <button onclick="next()">Next</button>
 </div>
 
-<script type="module" src="js/auth-guard.js"></script>
-<script type="module" src="js/flashcards.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, getDocs, query, where } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+const firebaseConfig = {
+  apiKey: "AIzaSyCz1RpCPMesqwVwD5ki916ZsHm9Doi7JtU",
+  authDomain: "pgp-cet-portal.firebaseapp.com",
+  projectId: "pgp-cet-portal",
+  storageBucket: "pgp-cet-portal.firebasestorage.app",
+  messagingSenderId: "369834140308",
+  appId: "1:369834140308:web:8d9cadb6e095f7575c8a81"
+};
+let cards=[],i=0,flipSide=false;
+
+window.loadCards=async()=>{
+  const s=subject.value;
+  if(!s) return;
+  const q=query(collection(db,"questions"),where("subject","==",s));
+  const snap=await getDocs(q);
+  cards=snap.docs.map(d=>d.data());
+  i=0;flipSide=false;
+  render();
+};
+
+function render(){
+  if(!cards.length){
+    card.innerText="No flashcards available";
+    return;
+  }
+  const c=cards[i];
+  card.innerHTML=flipSide?
+    `${c.correct}. ${c.options[c.correct]}<br><small>${c.explanation||""}</small>`:
+    c.question;
+}
+
+window.flip=()=>{flipSide=!flipSide;render();};
+window.next=()=>{if(i<cards.length-1){i++;flipSide=false;render();}};
+window.prev=()=>{if(i>0){i--;flipSide=false;render();}};
+</script>
+
 </body>
 </html>

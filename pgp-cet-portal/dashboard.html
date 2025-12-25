@@ -1,26 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard | PGP-CET</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{font-family:Arial;background:#f4f6f5}
+    header{background:#4CAF50;color:#fff;padding:15px;text-align:center}
+    .box{max-width:400px;margin:40px auto;background:#fff;padding:20px;border-radius:10px}
+    button{width:100%;padding:10px;margin-top:10px;background:#4CAF50;color:#fff;border:none}
+  </style>
 </head>
 <body>
 
 <header>User Dashboard</header>
 
-<div class="container">
-  <button onclick="location.href='test-start.html'">Start CET Mock Test</button>
+<div class="box">
+  <button onclick="location.href='test-start.html'">Start Test</button>
   <button onclick="location.href='flashcards.html'">Flashcards</button>
   <button onclick="logout()">Logout</button>
 </div>
 
-<script type="module" src="js/auth-guard.js"></script>
 <script type="module">
-  import { auth } from "./js/firebase.js";
-  import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-  window.logout = () => signOut(auth);
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const firebaseConfig = {
+  apiKey: "AIzaSyCz1RpCPMesqwVwD5ki916ZsHm9Doi7JtU",
+  authDomain: "pgp-cet-portal.firebaseapp.com",
+  projectId: "pgp-cet-portal",
+  storageBucket: "pgp-cet-portal.firebasestorage.app",
+  messagingSenderId: "369834140308",
+  appId: "1:369834140308:web:8d9cadb6e095f7575c8a81"
+};
+onAuthStateChanged(auth,user=>{
+  if(!user) location.href="login.html";
+});
+window.logout=()=>signOut(auth);
 </script>
 </body>
 </html>
